@@ -13,8 +13,19 @@ $(document).ready(function() {
   // Show first slide
   $('.active').show();
 
-  // Event handler
-  $('#next').on('click', function() {
+  // Next Handler
+  $('#next').on('click', nextSlide);
+
+  // Prev Handler
+  $('#prev').on('click', prevSlide);
+
+  // Auto Slider Handler
+  if(autoswitch == true) {
+    setInterval(nextSlide, autoswitch_speed);
+  }
+
+  // Switch to next slide function
+  function nextSlide() {
     $('.active').removeClass('active').addClass('oldActive');
     if($('.oldActive').is(':last-child')) {
       $('.slide').first().addClass('active');
@@ -24,9 +35,10 @@ $(document).ready(function() {
     $('.oldActive').removeClass('oldActive');
     $('.slide').fadeOut(speed);
     $('.active').fadeIn(speed);
-  });
+  }
 
-  $('#prev').on('click', function() {
+  // Switch to prev slide
+  function prevSlide() {
     $('.active').removeClass('active').addClass('oldActive');
     if($('.oldActive').is(':first-child')) {
       $('.slide').last().addClass('active');
@@ -36,21 +48,6 @@ $(document).ready(function() {
     $('.oldActive').removeClass('oldActive');
     $('.slide').fadeOut(speed);
     $('.active').fadeIn(speed);
-  });
-
-  // setInterval function
-  if(autoswitch == true) {
-    setInterval(function() {
-      $('.active').removeClass('active').addClass('oldActive');
-      if($('.oldActive').is(':last-child')) {
-        $('.slide').first().addClass('active');
-      } else {
-        $('.oldActive').next().addClass('active');
-      }
-      $('.oldActive').removeClass('oldActive');
-      $('.slide').fadeOut(speed);
-      $('.active').fadeIn(speed);
-    }, autoswitch_speed);
   }
 });
 
